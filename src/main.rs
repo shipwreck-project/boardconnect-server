@@ -12,5 +12,9 @@ fn hello_world(_: &mut Request) -> IronResult<Response> {
 fn main() {
     let mut chain = Chain::new(hello_world);
     chain.link_around(Logger::new(LoggerMode::Tiny));
-    Iron::new(chain).http("localhost:3000").unwrap();
+
+    match Iron::new(chain).http("localhost:3000") {
+        Ok(_o) => println!("Server is Starting in Port 3000"),
+        Err(e) => println!("Server start failed due to {}", e),
+    }
 }
