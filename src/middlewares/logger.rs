@@ -4,15 +4,7 @@ use crate::utils::time;
 use iron::prelude::*;
 use iron::{AroundMiddleware, Handler};
 
-pub enum LoggerMode {
-  Silent,
-  Tiny,
-  Large,
-}
-
-pub struct Logger {
-  mode: LoggerMode,
-}
+pub struct Logger;
 
 struct LoggerHandler<H: Handler> {
   logger: Logger,
@@ -20,19 +12,12 @@ struct LoggerHandler<H: Handler> {
 }
 
 impl Logger {
-  pub fn new(mode: LoggerMode) -> Logger {
-    Logger { mode }
+  pub fn new() -> Logger {
+    Logger {}
   }
 
   pub fn log(&self, req: &Request, res: Result<&Response, &IronError>, time: i128) {
-    match self.mode {
-      LoggerMode::Silent => {}
-      LoggerMode::Tiny => println!("Req: {:?}\nRes: {:?}\nTook: {}", req, res, time),
-      LoggerMode::Large => println!(
-        "Request: {:?}\nResponse: {:?}\nResponse-Time: {}",
-        req, res, time
-      ),
-    }
+    println!("Req: {:?}\nRes: {:?}\nTook: {}", req, res, time);
   }
 }
 

@@ -5,7 +5,7 @@ mod middlewares;
 mod utils;
 
 use iron::prelude::*;
-use middlewares::logger::{Logger, LoggerMode};
+use middlewares::logger::Logger;
 
 fn hello_world(_: &mut Request) -> IronResult<Response> {
     Ok(Response::with((iron::status::Ok, "Hello World")))
@@ -13,7 +13,7 @@ fn hello_world(_: &mut Request) -> IronResult<Response> {
 
 fn main() {
     let mut chain = Chain::new(hello_world);
-    chain.link_around(Logger::new(LoggerMode::Tiny));
+    chain.link_around(Logger::new());
 
     match Iron::new(chain).http("localhost:3000") {
         Ok(_o) => println!("Server is Starting in Port 3000"),
