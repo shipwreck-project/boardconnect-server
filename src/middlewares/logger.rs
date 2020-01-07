@@ -1,9 +1,8 @@
 extern crate iron;
-extern crate time;
 
+use crate::utils::time;
 use iron::prelude::*;
 use iron::{AroundMiddleware, Handler};
-use time::PrimitiveDateTime;
 
 pub enum LoggerMode {
   Silent,
@@ -39,11 +38,11 @@ impl Logger {
 
 impl<H: Handler> Handler for LoggerHandler<H> {
   fn handle(&self, req: &mut Request) -> IronResult<Response> {
-    let entry = get_currnet_time_in_ns();
+    let entry = time::get_current_time_in_ns();
     let res = self.handler.handle(req);
     self
       .logger
-      .log(req, res.as_ref(), get_currnet_time_in_ns() - entry);
+      .log(req, res.as_ref(), time::get_current_time_in_ns() - entry);
     res
   }
 }
@@ -55,9 +54,4 @@ impl AroundMiddleware for Logger {
       handler,
     }) as Box<dyn Handler>
   }
-}
-
-fn get_currnet_time_in_ns() -> i128 {
-  let duration = PrimitiveDateTime::now() - PrimitiveDateTime::unix_epoch();
-  duration.whole_nanoseconds()
 }
