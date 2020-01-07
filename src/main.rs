@@ -1,9 +1,8 @@
 extern crate iron;
 extern crate time;
 
-mod middlewares;
-
 use iron::prelude::*;
+mod middlewares;
 use middlewares::logger::{Logger, LoggerMode};
 
 fn hello_world(_: &mut Request) -> IronResult<Response> {
