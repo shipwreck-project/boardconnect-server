@@ -2,17 +2,14 @@ extern crate iron;
 extern crate time;
 
 mod middlewares;
+mod routes;
 mod utils;
 
 use iron::prelude::*;
 use middlewares::logger::Logger;
 
-fn hello_world(_: &mut Request) -> IronResult<Response> {
-    Ok(Response::with((iron::status::Ok, "Hello World")))
-}
-
 fn main() {
-    let mut chain = Chain::new(hello_world);
+    let mut chain = Chain::new(routes::new());
     chain.link_around(Logger::new());
 
     match Iron::new(chain).http("localhost:3000") {
