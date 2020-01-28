@@ -3,9 +3,12 @@ extern crate actix_web;
 extern crate diesel;
 extern crate dotenv;
 extern crate r2d2;
+#[macro_use]
+extern crate serde_json;
 
 mod app;
 mod controller;
+mod enums;
 mod models;
 mod schema;
 mod services;

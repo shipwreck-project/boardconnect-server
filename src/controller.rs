@@ -1,3 +1,5 @@
+pub mod test;
+
 use actix_web::{get, Responder};
 
 #[get("/")]
