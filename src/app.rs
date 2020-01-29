@@ -15,7 +15,7 @@ pub async fn start() -> std::io::Result<()> {
       // DB를 현재 사용하지 않기 때문에 주석처리
       // .data(create_data())
       // 좋지 않은 구조라서 수정 예정입니다. 테스트 임시용
-      .service(controller::index)
+      .configure(controller::api)
       .service(controller::test::get_test_data)
       .wrap(create_logger())
   })
