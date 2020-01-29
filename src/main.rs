@@ -5,6 +5,7 @@ extern crate dotenv;
 extern crate r2d2;
 #[macro_use]
 extern crate serde_json;
+extern crate reqwest;
 
 mod app;
 mod controller;

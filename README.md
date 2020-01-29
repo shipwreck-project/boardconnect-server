@@ -24,4 +24,5 @@ cargo install diesel_cli --no-default-features --features mysql
 
 ```
 DATABASE_URL=MYSQL_서버_설정
+BOARDGAME_API_KEY=보드게임 api 클라이언트 키
 ```
