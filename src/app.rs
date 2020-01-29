@@ -1,12 +1,30 @@
 pub mod data;
 
+use crate::controller;
 use crate::services;
 use actix_web::middleware;
+use actix_web::{App, HttpServer};
 use env_logger;
 
-pub fn create_logger() -> middleware::Logger {
+pub async fn start() -> std::io::Result<()> {
   std::env::set_var("RUST_LOG", "actix_web=info");
   env_logger::init();
+
+  HttpServer::new(|| {
+    App::new()
+      // DB를 현재 사용하지 않기 때문에 주석처리
+      // .data(create_data())
+      // 좋지 않은 구조라서 수정 예정입니다. 테스트 임시용
+      .service(controller::index)
+      .service(controller::test::get_test_data)
+      .wrap(create_logger())
+  })
+  .bind("127.0.0.1:8080")?
+  .run()
+  .await
+}
+
+pub fn create_logger() -> middleware::Logger {
   middleware::Logger::default()
 }
 
