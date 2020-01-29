@@ -7,7 +7,7 @@ use actix_web::{App, HttpServer};
 use env_logger;
 
 pub async fn start() -> std::io::Result<()> {
-  std::env::set_var("RUST_LOG", "actix_web=info");
+  // std::env::set_var("RUST_LOG", "actix_web=info");
   env_logger::init();
 
   HttpServer::new(|| {
