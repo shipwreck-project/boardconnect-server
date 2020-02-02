@@ -1,8 +1,9 @@
+mod game;
 pub mod test;
 
-use actix_web::{get, Responder};
+use actix_web::web;
+use game::index;
 
-#[get("/")]
-pub async fn index() -> impl Responder {
-  format!("Hello world!")
+pub fn api(config: &mut web::ServiceConfig) {
+  config.service(web::scope("/api").service(web::scope("/game").configure(index)));
 }

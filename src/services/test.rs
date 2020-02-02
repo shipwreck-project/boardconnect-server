@@ -1,7 +1,5 @@
 use crate::models::*;
 
-use actix_web::web;
-
 use crate::app::data::GlobalData;
 use crate::models;
 use diesel::prelude::*;
