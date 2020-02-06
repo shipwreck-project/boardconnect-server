@@ -1,5 +1,5 @@
 mod game;
-pub mod test;
+mod utils;
 
 use actix_web::web;
 use game::index;
