@@ -27,7 +27,7 @@ pub fn create_logger() -> middleware::Logger {
 }
 
 pub fn create_data() -> data::Data {
-  data::Data::new(create_pool(), "/")
+  data::Data::new(create_pool())
 }
 
 fn create_pool() -> services::Pool {
