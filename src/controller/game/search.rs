@@ -4,6 +4,10 @@ use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use std::env;
 
+pub fn index(config: &mut web::ServiceConfig) {
+  config.service(web::scope("/search").service(web::resource("").route(web::get().to(get))));
+}
+
 #[derive(Deserialize)]
 pub struct Search {
   name: Option<String>,
@@ -54,7 +58,7 @@ impl Params {
   }
 }
 
-pub async fn get(search: web::Query<Search>) -> Result<impl Responder, error::ResError> {
+async fn get(search: web::Query<Search>) -> Result<impl Responder, error::ResError> {
   let client = Client::new();
   let api_key = env::var("BOARDGAME_API_KEY").unwrap();
   let limit = if let Some(num) = search.per_page {
