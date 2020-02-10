@@ -1,17 +1,17 @@
 use crate::models::*;
 
-use crate::app::data::GlobalData;
 use crate::models;
+use crate::services::Pool;
 use diesel::prelude::*;
 use diesel::MysqlConnection;
 
 pub struct Service {
-  data: GlobalData,
+  pool: Pool,
 }
 
 impl Service {
-  pub fn new(self, data: GlobalData) -> Service {
-    Service { data: data }
+  pub fn new(self, pool: Pool) -> Service {
+    Service { pool: pool }
   }
 
   pub fn connection_test_insert(self) -> super::DieselResult<usize> {
@@ -22,7 +22,7 @@ impl Service {
       pw: "asdfasdf",
     };
 
-    let conn: &MysqlConnection = &self.data.pool.get().unwrap();
+    let conn: &MysqlConnection = &self.pool.get().unwrap();
 
     let res = diesel::insert_into(users::table)
       .values(&new_user)
@@ -35,7 +35,7 @@ impl Service {
   pub fn connection_test_select(self) -> super::DieselResult<Vec<models::Users>> {
     use crate::schema::users::dsl::*;
 
-    let conn: &MysqlConnection = &self.data.pool.get().unwrap();
+    let conn: &MysqlConnection = &self.pool.get().unwrap();
 
     let results = users
       .limit(5)

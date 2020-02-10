@@ -7,16 +7,14 @@ use actix_web::{App, HttpServer};
 use env_logger;
 
 pub async fn start() -> std::io::Result<()> {
-  // std::env::set_var("RUST_LOG", "actix_web=info");
+  std::env::set_var("RUST_LOG", "actix_web=info");
   env_logger::init();
 
   HttpServer::new(|| {
     App::new()
       // DB를 현재 사용하지 않기 때문에 주석처리
       // .data(create_data())
-      // 좋지 않은 구조라서 수정 예정입니다. 테스트 임시용
       .configure(controller::api)
-      .service(controller::test::get_test_data)
       .wrap(create_logger())
   })
   .bind("127.0.0.1:8080")?
@@ -29,7 +27,7 @@ pub fn create_logger() -> middleware::Logger {
 }
 
 pub fn create_data() -> data::Data {
-  data::Data::new(create_pool(), "/")
+  data::Data::new(create_pool())
 }
 
 fn create_pool() -> services::Pool {

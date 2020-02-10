@@ -9,7 +9,6 @@ extern crate reqwest;
 
 mod app;
 mod controller;
-mod enums;
 mod models;
 mod schema;
 mod services;
